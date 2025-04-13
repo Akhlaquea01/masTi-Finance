@@ -1,6 +1,6 @@
-import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, inject, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
@@ -8,6 +8,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { CreteModalComponent } from '../crete-modal/crete-modal.component';
 import { SidebarModule } from 'primeng/sidebar';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'masTi-header',
@@ -16,8 +17,10 @@ import { SidebarModule } from 'primeng/sidebar';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
+  private routerSubscription: Subscription | undefined;
   items: MenuItem[] | undefined;
   isLoggedIn: boolean = false;
   visible = false;
@@ -33,6 +36,21 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.initializeMenu();
     this.checkLoginStatus();
+    
+    // Subscribe to router events to check login status on navigation
+    if (isPlatformBrowser(this.platformId)) {
+      this.routerSubscription = this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        this.checkLoginStatus();
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 
   private initializeMenu() {
@@ -42,7 +60,8 @@ export class HeaderComponent implements OnInit {
         items: [
           {
             label: 'Manage Profile',
-            icon: 'pi pi-user'
+            icon: 'pi pi-user',
+            command: () => this.router.navigate(['/account'])
           },
           {
             label: 'Theme',
@@ -51,7 +70,8 @@ export class HeaderComponent implements OnInit {
           },
           {
             label: 'Logout',
-            icon: 'pi pi-lock-open'
+            icon: 'pi pi-lock-open',
+            command: () => this.logout()
           }
         ]
       }
@@ -59,14 +79,20 @@ export class HeaderComponent implements OnInit {
   }
 
   checkLoginStatus() {
-    // const currentUser = localStorage.getItem('currentUser');
-    // this.isLoggedIn = !!currentUser;
+    if (isPlatformBrowser(this.platformId)) {
+      const currentUser = localStorage.getItem('currentUser');
+      this.isLoggedIn = !!currentUser;
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   logout() {
-    // localStorage.removeItem('currentUser');
-    // this.isLoggedIn = false;
-    // window.location.href = '/auth/login';
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('currentUser');
+    }
+    this.isLoggedIn = false;
+    this.router.navigate(['/auth/login']);
   }
 
   onVisibleChange(value: boolean) {

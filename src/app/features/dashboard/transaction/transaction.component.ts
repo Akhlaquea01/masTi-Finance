@@ -4,6 +4,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
 import { PrimeIcons } from 'primeng/api';
 import { CardModule } from 'primeng/card';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'masTi-transaction',
@@ -16,6 +17,8 @@ export class TransactionComponent implements OnInit {
   PrimeIcons = PrimeIcons;
   first = 0;
   rows = 5;
+  currentRoute: string = '';
+  pageTitle: string = 'Recent Transactions';
 
   transactions = [
     {
@@ -64,6 +67,7 @@ export class TransactionComponent implements OnInit {
       description: 'Quarterly Performance Bonus',
       amount: 12500,
       date: new Date('2025-04-05T16:45:00'),
+      type: 'income'
     },
     {
       icon: PrimeIcons.SHOPPING_BAG,
@@ -71,6 +75,7 @@ export class TransactionComponent implements OnInit {
       description: 'Zara - New Jacket',
       amount: -89.99,
       date: new Date('2025-04-04T18:20:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.GIFT,
@@ -78,6 +83,7 @@ export class TransactionComponent implements OnInit {
       description: 'Birthday Gift from Family',
       amount: 500,
       date: new Date('2025-04-03T20:00:00'),
+      type: 'income'
     },
     {
       icon: PrimeIcons.BOOK,
@@ -85,6 +91,7 @@ export class TransactionComponent implements OnInit {
       description: 'Spring Semester Tuition',
       amount: -3000,
       date: new Date('2025-04-02T09:00:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.DOLLAR,
@@ -92,6 +99,7 @@ export class TransactionComponent implements OnInit {
       description: 'April Salary - Company XYZ',
       amount: 68000,
       date: new Date('2025-04-01T10:00:00'),
+      type: 'income'
     },
     {
       icon: PrimeIcons.HEART,
@@ -99,6 +107,7 @@ export class TransactionComponent implements OnInit {
       description: 'Dental Checkup',
       amount: -200,
       date: new Date('2025-03-31T15:45:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.SEND,
@@ -106,6 +115,7 @@ export class TransactionComponent implements OnInit {
       description: 'Shell Gas Station',
       amount: -55.20,
       date: new Date('2025-03-30T12:00:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.SEND,
@@ -113,6 +123,7 @@ export class TransactionComponent implements OnInit {
       description: 'Local Food Bank',
       amount: -100,
       date: new Date('2025-03-29T13:30:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.HOME,
@@ -120,6 +131,7 @@ export class TransactionComponent implements OnInit {
       description: 'Monthly Rent - April',
       amount: -12000,
       date: new Date('2025-03-28T08:00:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.CAMERA,
@@ -127,6 +139,7 @@ export class TransactionComponent implements OnInit {
       description: 'Camera Lens Purchase',
       amount: -799,
       date: new Date('2025-03-27T14:10:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.CAMERA,
@@ -134,6 +147,7 @@ export class TransactionComponent implements OnInit {
       description: 'Flight Tickets to Goa',
       amount: -15500,
       date: new Date('2025-03-26T07:00:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.CAR,
@@ -141,6 +155,7 @@ export class TransactionComponent implements OnInit {
       description: 'Monthly EMI - Maruti Suzuki',
       amount: -7500,
       date: new Date('2025-03-25T10:15:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.PHONE,
@@ -148,6 +163,7 @@ export class TransactionComponent implements OnInit {
       description: 'Airtel Unlimited Plan',
       amount: -399,
       date: new Date('2025-03-24T18:40:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.CHART_LINE,
@@ -155,6 +171,7 @@ export class TransactionComponent implements OnInit {
       description: 'Bought HDFC Shares',
       amount: -10000,
       date: new Date('2025-03-23T11:30:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.MONEY_BILL,
@@ -162,14 +179,46 @@ export class TransactionComponent implements OnInit {
       description: 'FD Interest - SBI Bank',
       amount: 1200,
       date: new Date('2025-03-22T09:00:00'),
+      type: 'income'
     },
   ];
 
-  get paginatedTransactions() {
-    return this.transactions.slice(this.first, this.first + this.rows);
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  get filteredTransactions() {
+    switch (this.currentRoute) {
+      case 'income':
+        return this.transactions.filter(t => t.amount > 0);
+      case 'expense':
+        return this.transactions.filter(t => t.amount < 0);
+      default:
+        return this.transactions;
+    }
   }
 
-  ngOnInit() {}
+  get paginatedTransactions() {
+    return this.filteredTransactions.slice(this.first, this.first + this.rows);
+  }
+
+  ngOnInit() {
+    // Get the current route
+    this.currentRoute = this.router.url.split('/')[1];
+    
+    // Set the page title based on the route
+    switch (this.currentRoute) {
+      case 'income':
+        this.pageTitle = 'Income Transactions';
+        break;
+      case 'expense':
+        this.pageTitle = 'Expense Transactions';
+        break;
+      default:
+        this.pageTitle = 'Recent Transactions';
+    }
+  }
 
   onPageChange(event: any) {
     this.first = event.first;
