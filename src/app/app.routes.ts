@@ -12,6 +12,21 @@ export const routes: Routes = [
       .then(m => m.DashboardComponent)
   },
   {
+    path: 'expense',
+    loadComponent: () => import('./features/dashboard/transaction/transaction.component')
+      .then(m => m.TransactionComponent)
+  },
+  {
+    path: 'account',
+    loadComponent: () => import('./features/account/account.component')
+      .then(m => m.AccountComponent)
+  },
+  {
+    path: 'income',
+    loadComponent: () => import('./features/dashboard/transaction/transaction.component')
+      .then(m => m.TransactionComponent)
+  },
+  {
     path: 'auth',
     children: [
       {

@@ -1,0 +1,48 @@
+<div class="card">
+    <p-table #dt [value]="accounts" [globalFilterFields]="['name', 'number', 'type', 'status']" selectionMode="single"
+        [(selection)]="selectedAccounts" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }" [rows]="5"
+        [paginator]="true" stateStorage="session" stateKey="account-table-session">
+        <ng-template #caption>
+            <p-iconfield iconPosition="left">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Global Search" />
+
+            </p-iconfield>
+        </ng-template>
+
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn="name" style="width: 20%">Name <p-sortIcon field="name" /></th>
+                <th pSortableColumn="number" style="width: 20%">Number <p-sortIcon field="number" /></th>
+                <th pSortableColumn="type" style="width: 15%">Type <p-sortIcon field="type" /></th>
+                <th pSortableColumn="balance" style="width: 15%">Balance <p-sortIcon field="balance" /></th>
+                <th pSortableColumn="status" style="width: 15%">Status <p-sortIcon field="status" /></th>
+                <th pSortableColumn="createdAt" style="width: 15%">Created At <p-sortIcon field="createdAt" /></th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-account>
+            <tr [pSelectableRow]="account">
+                <td>{{ account.name }}</td>
+                <td>{{ account.number }}</td>
+                <td>
+                    <p-tag [value]="account.type" [severity]="getTypeSeverity(account.type)" class="capitalize"></p-tag>
+                </td>
+                <td>₹{{ account.balance | number: '1.2-2' }}</td>
+                <td>
+                    <p-tag [value]="account.status"
+                        [severity]="account.status === 'active' ? 'success' : 'danger'"></p-tag>
+                </td>
+                <td>{{ account.createdAt }}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template emptymessage>
+            <tr>
+                <td colspan="6">No accounts found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
