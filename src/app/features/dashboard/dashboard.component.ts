@@ -4,11 +4,13 @@ import { MarketData, AIPrediction } from '../../core/services/financial.service'
 import { CardModule } from 'primeng/card';
 import { MonthlyAmtSummaryComponent } from "./monthly-amt-summary/monthly-amt-summary.component";
 import { MonthlybudgetSummaryComponent } from './monthlybudget-summary/monthlybudget-summary.component';
+import { BudgetHistoryComponent } from './budget-history/budget-history.component';
+import { TransactionComponent } from './transaction/transaction.component';
 
 @Component({
   selector: 'masTi-dashboard',
   standalone: true,
-  imports: [CommonModule, CardModule, MonthlyAmtSummaryComponent, MonthlybudgetSummaryComponent],
+  imports: [CommonModule, CardModule, MonthlyAmtSummaryComponent, MonthlybudgetSummaryComponent, BudgetHistoryComponent, TransactionComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

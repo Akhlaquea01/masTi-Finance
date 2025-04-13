@@ -1,0 +1,25 @@
+<div class="transaction-card">
+    <h2 class="title">Recent Transactions</h2>
+    <div *ngFor="let transaction of paginatedTransactions" class="transaction-item">
+        <div class="icon-wrapper">
+            <i [ngClass]="transaction.icon" class="pi icon"></i>
+        </div>
+        <div class="transaction-info">
+            <div class="main-row">
+                <span class="transaction-title">{{ transaction.category }}</span>
+                <span class="transaction-amount"
+                    [ngClass]="{ 'income': transaction.amount > 0, 'expense': transaction.amount < 0 }">
+                    {{ transaction.amount | number }}
+                </span>
+            </div>
+            <div class="sub-row">
+                <span class="transaction-person">{{ transaction.description }}</span>
+                <span class="transaction-date">{{ transaction.date | date: 'dd MMMM yyyy HH:mm' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <p-paginator [rows]="5" [totalRecords]="transactions.length" [first]="first" (onPageChange)="onPageChange($event)"
+        [rowsPerPageOptions]="[5, 10, 20]" styleClass="custom-paginator">
+    </p-paginator>
+</div>
