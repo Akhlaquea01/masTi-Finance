@@ -1,24 +1,37 @@
-<p-toolbar [style]="{ 'border-radius': '3rem', 'padding': '1rem 1rem 1rem 1.5rem' }">
+<p-toolbar class="rounded-[3rem] p-2 sm:p-4 min-h-[44px] sm:min-h-[56px] header-toolbar">
   <ng-template #start>
-    <div class="flex items-center gap-2">
-      <svg width="31" height="33" viewBox="0 0 31 33" fill="none" xmlns="http://www.w3.org/2000/svg"
-        style="width: 2rem; margin-right: 1rem">
+    <div class="flex items-center">
+      <!-- Logo -->
+      <svg width="1" height="33" viewBox="0 0 31 33" fill="none" xmlns="http://www.w3.org/2000/svg"
+        class="w-3 sm:w-7 flex-shrink-0">
         <path
           d="M15.5 0C7.13 0 0 3.69 0 8.25V24.75C0 29.31 7.13 33 15.5 33C23.87 33 31 29.31 31 24.75V8.25C31 3.69 23.87 0 15.5 0ZM28.25 24.75C28.25 27.69 22.63 30.25 15.5 30.25C8.37 30.25 2.75 27.69 2.75 24.75V22.91C5.81 25.06 10.39 26.13 15.5 26.13C20.61 26.13 25.19 25.06 28.25 22.91V24.75ZM28.25 19.8C28.25 22.74 22.63 25.3 15.5 25.3C8.37 25.3 2.75 22.74 2.75 19.8V17.96C5.81 20.11 10.39 21.18 15.5 21.18C20.61 21.18 25.19 20.11 28.25 17.96V19.8ZM28.25 14.85C28.25 17.79 22.63 20.35 15.5 20.35C8.37 20.35 2.75 17.79 2.75 14.85V13.01C5.81 15.16 10.39 16.23 15.5 16.23C20.61 16.23 25.19 15.16 28.25 13.01V14.85ZM15.5 14.52C8.37 14.52 2.75 11.96 2.75 9.02C2.75 6.08 8.37 3.52 15.5 3.52C22.63 3.52 28.25 6.08 28.25 9.02C28.25 11.96 22.63 14.52 15.5 14.52Z"
           fill="var(--p-primary-color)" />
       </svg>
-      <p-button label="Accounts" text plain />
-      <p-button label="Income" text plain />
-      <p-button label="Expences" text plain />
+
+      <!-- Navigation Buttons -->
+      <div class="flex items-center ml-1 sm:ml-3 space-x-1 sm:space-x-2">
+        <p-button label="Accounts" text plain 
+          styleClass="p-button-sm text-xs sm:text-base py-1 px-1.5 sm:py-2 sm:px-3" />
+        <p-button label="Income" text plain 
+          styleClass="p-button-sm text-xs sm:text-base py-1 px-1.5 sm:py-2 sm:px-3" />
+        <p-button label="Expenses" text plain 
+          styleClass="p-button-sm text-xs sm:text-base py-1 px-1.5 sm:py-2 sm:px-3" />
+        <p-button (click)="visible = true" icon="pi pi-plus" 
+          styleClass="p-button-sm !w-7 !h-7 sm:!w-9 sm:!h-9 flex items-center justify-center" />
+      </div>
     </div>
   </ng-template>
 
   <ng-template #end>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center">
       <p-avatar (click)="menu.toggle($event)"
         image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-        [style]="{ width: '32px', height: '32px' }" />
+        class="w-[26px] h-[26px] sm:w-[32px] sm:h-[32px] cursor-pointer" 
+        shape="circle" />
     </div>
     <p-menu #menu [model]="items" [popup]="true" />
   </ng-template>
 </p-toolbar>
+
+<masTi-crete-modal [visible]="visible" (visibleChange)="onVisibleChange($event)"></masTi-crete-modal>

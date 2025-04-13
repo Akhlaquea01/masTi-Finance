@@ -1,8 +1,36 @@
+// Component styles are handled by Tailwind CSS classes
+
+:host {
+  display: block;
+  width: 100%;
+
+  ::ng-deep {
+    .p-paginator {
+      background: transparent;
+      border: none;
+      padding: 0;
+
+      .p-paginator-pages .p-paginator-page.p-highlight {
+        background: var(--primary-color);
+        color: var(--primary-color-text);
+      }
+
+      .p-paginator-element {
+        color: var(--text-color);
+        
+        &:not(.p-highlight):not(:disabled):hover {
+          background: var(--surface-hover);
+          color: var(--text-color);
+        }
+      }
+    }
+  }
+}
+
 .transaction-card {
     padding: 1.5rem;
     border-radius: 12px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    background-color: transparent;
 
     .title {
         font-size: 1.2rem;
@@ -14,12 +42,11 @@
         display: flex;
         align-items: center;
         padding: 1rem 0;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid;
 
         .icon-wrapper {
             width: 50px;
             height: 50px;
-            background-color: #f4f4f4;
             border-radius: 12px;
             display: flex;
             justify-content: center;
@@ -28,7 +55,6 @@
 
             .icon {
                 font-size: 1.5rem;
-                color: #555;
             }
         }
 
@@ -40,20 +66,6 @@
                 justify-content: space-between;
                 font-weight: 600;
                 font-size: 1rem;
-
-                .transaction-title {
-                    color: #212121;
-                }
-
-                .transaction-amount {
-                    &.income {
-                        color: #3cb371;
-                    }
-
-                    &.expense {
-                        color: #d32f2f;
-                    }
-                }
             }
 
             .sub-row {
@@ -61,7 +73,6 @@
                 display: flex;
                 justify-content: space-between;
                 font-size: 0.85rem;
-                color: #888;
             }
         }
     }
@@ -71,11 +82,13 @@
         display: flex;
         justify-content: center;
 
-        .p-paginator {
+        ::ng-deep .p-paginator {
+            background: transparent;
+            border: none;
+
             .p-paginator-page.p-highlight {
-                background: #4caf50;
-                color: #fff;
-                border-radius: 50%;
+                background: var(--primary-color);
+                color: var(--primary-color-text);
             }
         }
     }

@@ -1,0 +1,26 @@
+:host ::ng-deep {
+    @media screen and (max-width: 576px) {
+        .p-drawer {
+            .p-drawer-content {
+                padding: 0;
+            }
+
+            .p-tabview .p-tabview-panels {
+                padding: 0.5rem;
+            }
+
+            .p-tabview .p-tabview-nav {
+                padding: 0 0.5rem;
+            }
+
+            .p-tabpanel {
+                padding: 0.5rem;
+            }
+
+            p {
+                margin: 0.5rem 0;
+                line-height: 1.4;
+            }
+        }
+    }
+}

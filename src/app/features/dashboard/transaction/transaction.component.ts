@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
-import { NgFor } from '@angular/common';
 import { PrimeIcons } from 'primeng/api';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'masTi-transaction',
-  imports: [CommonModule, NgFor, PaginatorModule, RippleModule],
+  standalone: true,
+  imports: [CommonModule, PaginatorModule, RippleModule, CardModule],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.scss'
 })
-export class TransactionComponent {
+export class TransactionComponent implements OnInit {
   PrimeIcons = PrimeIcons;
+  first = 0;
+  rows = 5;
 
   transactions = [
     {
@@ -21,6 +24,7 @@ export class TransactionComponent {
       description: 'Upwork Client - Logo Design',
       amount: 3500,
       date: new Date('2025-04-10T09:45:00'),
+      type: 'income'
     },
     {
       icon: PrimeIcons.SHOPPING_CART,
@@ -28,6 +32,7 @@ export class TransactionComponent {
       description: 'Walmart - Weekly Essentials',
       amount: -128.75,
       date: new Date('2025-04-09T17:30:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.BOOK,
@@ -35,6 +40,7 @@ export class TransactionComponent {
       description: 'Angular Masterclass - Udemy',
       amount: -59.99,
       date: new Date('2025-04-08T14:00:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.CREDIT_CARD,
@@ -42,6 +48,7 @@ export class TransactionComponent {
       description: 'Chase Card Auto Payment',
       amount: -1500,
       date: new Date('2025-04-07T08:15:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.CLOUD_DOWNLOAD,
@@ -49,6 +56,7 @@ export class TransactionComponent {
       description: 'AWS Monthly Bill',
       amount: -82.50,
       date: new Date('2025-04-06T23:00:00'),
+      type: 'expense'
     },
     {
       icon: PrimeIcons.MONEY_BILL,
@@ -157,16 +165,19 @@ export class TransactionComponent {
     },
   ];
 
-
-  first = 0;
-  rows = 5;
-
   get paginatedTransactions() {
     return this.transactions.slice(this.first, this.first + this.rows);
   }
 
+  ngOnInit() {}
+
   onPageChange(event: any) {
     this.first = event.first;
+    this.rows = event.rows;
   }
 
+  formatAmount(amount: number): string {
+    return amount >= 0 ? `+₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` 
+                      : `-₹${Math.abs(amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+  }
 }

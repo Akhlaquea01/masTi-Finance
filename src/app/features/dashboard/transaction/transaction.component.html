@@ -1,25 +1,32 @@
 <div class="transaction-card">
-    <h2 class="title">Recent Transactions</h2>
-    <div *ngFor="let transaction of paginatedTransactions" class="transaction-item">
-        <div class="icon-wrapper">
-            <i [ngClass]="transaction.icon" class="pi icon"></i>
+    <h2 class="title text-gray-800 dark:text-white">Recent Transactions</h2>
+    <div *ngFor="let transaction of paginatedTransactions" class="transaction-item border-gray-200 dark:border-yellow-600">
+        <div class="icon-wrapper" 
+             [class]="transaction.amount > 0 ? 'bg-green-50 dark:bg-green-900/30' : 'bg-red-50 dark:bg-red-900/30'">
+            <i [class]="transaction.icon + ' pi icon ' + 
+               (transaction.amount > 0 ? 'text-green-600 dark:text-green-300' : 'text-red-600 dark:text-red-300')"></i>
         </div>
         <div class="transaction-info">
             <div class="main-row">
-                <span class="transaction-title">{{ transaction.category }}</span>
-                <span class="transaction-amount"
-                    [ngClass]="{ 'income': transaction.amount > 0, 'expense': transaction.amount < 0 }">
-                    {{ transaction.amount | number }}
+                <span class="transaction-title text-yellow-900 dark:text-white">{{ transaction.category }}</span>
+                <span class="transaction-amount" 
+                      [class]="transaction.amount > 0 ? 'text-green-600 dark:text-green-300' : 'text-red-600 dark:text-red-300'">
+                    {{ formatAmount(transaction.amount) }}
                 </span>
             </div>
             <div class="sub-row">
-                <span class="transaction-person">{{ transaction.description }}</span>
-                <span class="transaction-date">{{ transaction.date | date: 'dd MMMM yyyy HH:mm' }}</span>
+                <span class="text-gray-600 dark:text-yellow-300">{{ transaction.description }}</span>
+                <span class="text-gray-600 dark:text-yellow-300">{{ transaction.date | date: 'dd MMM yyyy HH:mm' }}</span>
             </div>
         </div>
     </div>
 
-    <p-paginator [rows]="5" [totalRecords]="transactions.length" [first]="first" (onPageChange)="onPageChange($event)"
-        [rowsPerPageOptions]="[5, 10, 20]" styleClass="custom-paginator">
+    <p-paginator 
+        [rows]="5" 
+        [totalRecords]="transactions.length" 
+        [first]="first" 
+        (onPageChange)="onPageChange($event)"
+        [rowsPerPageOptions]="[5, 10, 20]" 
+        styleClass="custom-paginator">
     </p-paginator>
 </div>

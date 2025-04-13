@@ -1,1 +1,7 @@
 // Add any custom styles for the header component here 
+
+:host ::ng-deep {
+  .header-toolbar.p-toolbar {
+    background: transparent;
+  }
+} 
