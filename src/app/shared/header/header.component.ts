@@ -23,15 +23,15 @@ export class HeaderComponent implements OnInit {
 
     this.items = [
       {
-        label: 'Options',
+        label: 'Akhlaque',
         items: [
           {
-            label: 'Refresh',
-            icon: 'pi pi-refresh'
+            label: 'Manage Profile',
+            icon: 'pi pi-user'
           },
           {
-            label: 'Export',
-            icon: 'pi pi-upload'
+            label: 'Logout',
+            icon: 'pi pi-lock-open'
           }
         ]
       }

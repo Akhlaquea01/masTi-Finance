@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MarketCardComponent } from '../../shared/market-card/market-card.component';
 import { MarketData, AIPrediction } from '../../core/services/financial.service';
+import { CardModule } from 'primeng/card';
+import { MonthlyAmtSummaryComponent } from "./monthly-amt-summary/monthly-amt-summary.component";
+import { MonthlybudgetSummaryComponent } from './monthlybudget-summary/monthlybudget-summary.component';
 
 @Component({
   selector: 'masTi-dashboard',
   standalone: true,
-  imports: [CommonModule, MarketCardComponent],
+  imports: [CommonModule, CardModule, MonthlyAmtSummaryComponent, MonthlybudgetSummaryComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -14,7 +16,7 @@ export class DashboardComponent implements OnInit {
   marketData: MarketData[] = [];
   aiPredictions: AIPrediction[] = [];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     // Using mock data instead of API calls
