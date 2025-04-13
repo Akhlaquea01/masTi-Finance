@@ -46,8 +46,8 @@ export class BudgetHistoryComponent implements OnInit {
       const docStyle = getComputedStyle(document.documentElement);
       const incomeColor = docStyle.getPropertyValue('--p-blue-500');
       const expenseColor = docStyle.getPropertyValue('--p-pink-500');
-      const textColor = docStyle.getPropertyValue('--p-text-color');
-      const gridColor = docStyle.getPropertyValue('--p-content-border-color');
+      const textColor = '#495057';
+      const gridColor = '#dee2e6';
 
       this.chartData = {
         labels: ['Income vs Expense'],
@@ -71,25 +71,42 @@ export class BudgetHistoryComponent implements OnInit {
         plugins: {
           legend: {
             labels: {
-              color: textColor
+              color: textColor,
+              font: {
+                weight: 500
+              }
             }
           }
         },
         scales: {
           x: {
-            ticks: { color: textColor },
-            grid: { color: gridColor }
+            ticks: { 
+              color: textColor,
+              font: {
+                weight: 500
+              }
+            },
+            grid: { 
+              color: gridColor,
+              drawBorder: false
+            }
           },
           y: {
-            ticks: { color: textColor },
-            grid: { color: gridColor }
+            ticks: { 
+              color: textColor,
+              font: {
+                weight: 500
+              }
+            },
+            grid: { 
+              color: gridColor,
+              drawBorder: false
+            }
           }
         }
       };
     } else {
-      // Optionally, handle SSR logic here or simply skip chart initialization
       console.warn('SSR detected, skipping chart initialization');
     }
-
   }
 }

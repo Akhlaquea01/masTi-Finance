@@ -17,10 +17,16 @@
 
       .p-paginator-element {
         color: var(--text-color);
+        border: 1px solid var(--surface-border);
         
         &:not(.p-highlight):not(:disabled):hover {
           background: var(--surface-hover);
           color: var(--text-color);
+          border-color: var(--primary-color);
+        }
+
+        &.p-highlight {
+          border-color: var(--primary-color);
         }
       }
     }
@@ -89,6 +95,19 @@
             .p-paginator-page.p-highlight {
                 background: var(--primary-color);
                 color: var(--primary-color-text);
+                border-color: var(--primary-color);
+            }
+
+            .p-paginator-element {
+                &:not(.p-highlight):not(:disabled) {
+                    background: transparent;
+                    border: 1px solid var(--surface-border);
+                    
+                    &:hover {
+                        background: var(--surface-hover);
+                        border-color: var(--primary-color);
+                    }
+                }
             }
         }
     }

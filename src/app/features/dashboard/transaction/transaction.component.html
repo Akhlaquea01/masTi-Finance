@@ -1,6 +1,6 @@
 <div class="transaction-card">
-    <h2 class="title text-gray-800 dark:text-white">{{ pageTitle }}</h2>
-    <div *ngFor="let transaction of paginatedTransactions" class="transaction-item border-gray-200 dark:border-yellow-600">
+    <h2 class="title text-gray-800 dark:text-yellow-100">{{ pageTitle }}</h2>
+    <div *ngFor="let transaction of paginatedTransactions" class="transaction-item border-gray-300 dark:border-yellow-600">
         <div class="icon-wrapper" 
              [class]="transaction.amount > 0 ? 'bg-green-50 dark:bg-green-900/30' : 'bg-red-50 dark:bg-red-900/30'">
             <i [class]="transaction.icon + ' pi icon ' + 
@@ -8,15 +8,15 @@
         </div>
         <div class="transaction-info">
             <div class="main-row">
-                <span class="transaction-title text-yellow-900 dark:text-white">{{ transaction.category }}</span>
+                <span class="transaction-title text-gray-800 dark:text-yellow-100">{{ transaction.category }}</span>
                 <span class="transaction-amount" 
                       [class]="transaction.amount > 0 ? 'text-green-600 dark:text-green-300' : 'text-red-600 dark:text-red-300'">
                     {{ formatAmount(transaction.amount) }}
                 </span>
             </div>
             <div class="sub-row">
-                <span class="text-gray-600 dark:text-yellow-300">{{ transaction.description }}</span>
-                <span class="text-gray-600 dark:text-yellow-300">{{ transaction.date | date: 'dd MMM yyyy HH:mm' }}</span>
+                <span class="text-gray-500 dark:text-yellow-200/80">{{ transaction.description }}</span>
+                <span class="text-gray-500 dark:text-yellow-200/80">{{ transaction.date | date: 'dd MMM yyyy HH:mm' }}</span>
             </div>
         </div>
     </div>

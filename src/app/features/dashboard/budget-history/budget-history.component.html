@@ -2,21 +2,21 @@
     <div class="flex gap-3 mb-4 items-center flex-wrap">
         <!-- View Selector -->
         <p-select [options]="viewOptions" [(ngModel)]="selectedView" optionLabel="label" optionValue="value"
-            placeholder="View" styleClass="w-32"></p-select>
+            placeholder="View" styleClass="w-32 text-gray-700"></p-select>
 
         <!-- Daily: Show Date Picker -->
         <ng-container *ngIf="selectedView === 'Daily'">
             <p-datepicker [(ngModel)]="selectedDate" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay"
-                dateFormat="dd/mm/yy"></p-datepicker>
+                dateFormat="dd/mm/yy" styleClass="text-gray-700"></p-datepicker>
         </ng-container>
 
         <!-- Monthly View: Month + Year -->
         <p-select *ngIf="selectedView === 'Monthly'" [options]="monthOptions" [(ngModel)]="selectedMonth"
-            placeholder="Month" styleClass="w-32"></p-select>
+            placeholder="Month" styleClass="w-32 text-gray-700"></p-select>
 
         <!-- Yearly and Monthly: Year Dropdown -->
         <p-select *ngIf="selectedView === 'Monthly' || selectedView === 'Yearly'" [options]="yearOptions"
-            [(ngModel)]="selectedYear" placeholder="Year" styleClass="w-32"></p-select>
+            [(ngModel)]="selectedYear" placeholder="Year" styleClass="w-32 text-gray-700"></p-select>
     </div>
 
     <!-- Chart -->
